@@ -1,0 +1,10 @@
+Package: SNVCC
+Type: Package
+Title: SNV Cancer Classfication
+Version: 0.1.0
+Author: Bo Li
+Maintainer: Bo Li <lee190510@163.com>
+Description: Cancer classfication based on knn and SNV mutli-dimensional patterns.
+License: GPL
+Encoding: UTF-8
+LazyData: true
