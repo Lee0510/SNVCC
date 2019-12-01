@@ -4,7 +4,7 @@
 #' @param cancer The list of cancers that processed in getMatrix.R
 #' @param k The k of KNN
 #' @param ignoreSame Dicedes whether ignore the exactly same matrices in all six dimensions
-#' @return The result and same will be TRUE if there was a same patient
+#' @return The result and param parameter same will be TRUE if there was a same patient
 detect = function(x , cancer , k = 6 , ignoreSame = TRUE){
 
   maxId = 0
@@ -30,16 +30,33 @@ detect = function(x , cancer , k = 6 , ignoreSame = TRUE){
       }
     }
   }
-  minK_index = arrayInd(order(distance,decreasing=FALSE)[1:k],dim(distance))[,2]
-  #cat(arrayInd(order(distance,decreasing=FALSE)[1:k],dim(distance))[,1],"\n")
-  #cat(minK_index,"\n")
+  minK_yIndex = arrayInd(order(distance,decreasing=FALSE)[1:k],dim(distance))[,1]
+  minK_xIndex = arrayInd(order(distance,decreasing=FALSE)[1:k],dim(distance))[,2]
+  cat(minK_yIndex,"\n")
+  cat(minK_xIndex,"\n")
   classfication = c()
   for(i in 1:length(cancer)){
     classfication[i] = 0
   }
-  for(i in minK_index){
+  for(i in minK_xIndex){
     classfication[i] = classfication[i] + 1
   }
-  #cat(classfication,"\n")
-  return(list(which(classfication == max(classfication),arr.ind=TRUE),same))
+  cat(classfication,"\n")
+
+  k_dis = c()
+  for(i in 1:length(cancer)){
+    k_dis[i] = 0
+  }
+  for(i in 1:k){
+    k_dis[minK_xIndex[i]] = k_dis[minK_xIndex[i]] + distance[ minK_yIndex[i],minK_xIndex[i]]
+  }
+  k_backup = which(classfication == max(classfication),arr.ind=TRUE)
+  k_min = as.numeric(max(k_dis))
+  for(i in k_backup){
+    if(k_dis[i] <= k_min){
+      k_min = k_dis[i]
+    }
+  }
+  k_result = which(k_dis == k_min)
+  return(list(k_result,same))
 }

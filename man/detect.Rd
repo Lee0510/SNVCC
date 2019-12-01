@@ -10,14 +10,14 @@ detect(x , cancer , k = 6 , ignoreSame = TRUE)
 \arguments{
   \item{x}{MAF file}
   \item{cancer}{The list of cancers that processed in getMatrix.R}
-  \item{k}{The k of KNN}
+  \item{k}{The k value of KNN}
   \item{ignoreSame}{Dicedes whether ignore the exactly same matrices in all six dimensions}
 }
 \details{
 nothing
 }
 \value{
-\item{which(classfication == max(classfication),arr.ind=TRUE)    }{classfication result}
+\item{k_result    }{classfication result}
 
 {same    }{TRUE if there is a same sample}
 
